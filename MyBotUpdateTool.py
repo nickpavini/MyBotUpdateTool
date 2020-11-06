@@ -19,6 +19,9 @@ release = json.loads(requests.get(url=release_url).text)
 #print(json.dumps(release, indent=2))
 #exit()
 
+root = tk.Tk()
+root.withdraw() # hide the background window
+
 userChoice = tk.messagebox.askquestion(message = 'Latest Version of MyBot is ' + release['tag_name'] + '\n' + 'Would you like to update your bot?')
 if userChoice != 'yes': # exit if no need to update
     exit()
@@ -28,7 +31,7 @@ path = askdirectory(title='Select Folder') # shows dialog box and return the pat
 if not((BOT_FOLDER_PREFIX + 'MBR_') in path.split('/')[-1]): # check to see if we are looking at an existing bot directory
     tk.messagebox.showinfo(message="Folder not an existing bot folder.")
     exit()
-print(path.split('/')[-1])  
+#print(path.split('/')[-1])  
 
 # make copies of the CSV folder and the profiles folder
 csvFolder = os.path.join(path, 'CSV/')
@@ -48,4 +51,3 @@ shutil.move(os.path.join(os.path.split(path)[0], 'CSV/'), os.path.join(os.path.j
 shutil.move(os.path.join(os.path.split(path)[0], 'Profiles/'), os.path.join(os.path.join(os.path.split(path)[0], BOT_FOLDER_PREFIX + release['tag_name']), 'Profiles/'))
 
 tk.messagebox.showinfo(message="Bot Updated!")
-
